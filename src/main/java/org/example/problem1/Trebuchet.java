@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Trebuchet {
     public static void trebuchet(String filePath){
-        Long totalSum = 0L;
+        long totalSum = 0L;
         try{
             List<String> lines = Files.readAllLines(Paths.get(filePath));
             for(String line : lines){
@@ -21,19 +19,19 @@ public class Trebuchet {
         }
     }
     private static Long getInts(String line){
-        Pattern pattern = Pattern.compile("\\d+");
-        Matcher matcher = pattern.matcher(line);
-        Integer firstInt = null;
-        Integer lastInt = null;
+        String intOnly = line.replaceAll("[^0-9]","");
+        int nums = Integer.parseInt(intOnly);
 
-        while (matcher.find()){
-            int integerValue = Integer.parseInt(matcher.group());
-            if(firstInt == null) firstInt = integerValue;
-            lastInt = integerValue;
+        int lastInt = nums % 10;
+        int firstInt = getFirstInt(nums);
+
+        String result = firstInt + Integer.toString(lastInt);
+        return Long.parseLong(result);
+    }
+    private static int getFirstInt(int num){
+        while (num >= 10){
+            num /=10;
         }
-        if(firstInt != null){
-            return Long.parseLong(firstInt + lastInt.toString());
-        }
-        return 0L;
+        return num;
     }
 }
