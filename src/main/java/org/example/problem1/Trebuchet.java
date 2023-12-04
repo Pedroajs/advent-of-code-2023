@@ -3,12 +3,8 @@ package org.example.problem1;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class Trebuchet {
     public static void trebuchet(String filePath) {
@@ -18,7 +14,18 @@ public class Trebuchet {
             for (String line : lines) {
                 totalSum += getInts(line);
             }
-            System.out.println("The calibration number is: " + totalSum);
+            System.out.println("The calibration number solving1 is: " + totalSum);
+
+            totalSum = 0;
+            for (String line : lines) {
+                String digits = fromAlphabetToInt(line);
+                int a = getFirstDigit(Integer.parseInt(digits));
+                int b = getLastDigit(Integer.parseInt(digits));
+                String result = a + Integer.toString(b);
+                totalSum += Integer.parseInt(result);
+            }
+            System.out.println("Part 2 result: " + totalSum);
+
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -28,18 +35,11 @@ public class Trebuchet {
         String intOnly = line.replaceAll("[^0-9]", "");
         int nums = Integer.parseInt(intOnly);
 
-        int lastInt = nums % 10;
-        int firstInt = getFirstInt(nums);
+        long lastInt = getLastDigit(nums);
+        long firstInt = getFirstDigit(nums);
 
-        String result = firstInt + Integer.toString(lastInt);
+        String result = firstInt + Long.toString(lastInt);
         return Long.parseLong(result);
-    }
-
-    private static int getFirstInt(int num) {
-        while (num >= 10) {
-            num /= 10;
-        }
-        return num;
     }
 
     public static String fromAlphabetToInt(String inputLine) {
@@ -69,8 +69,17 @@ public class Trebuchet {
                 }
             }
         }
-        System.out.println(resultNumString);
         return  resultNumString;
     }
 
+    private static int getLastDigit(int num) {
+        return num % 10;
+    }
+
+    private static int getFirstDigit(int num) {
+        while (num >= 10) {
+            num /= 10;
+        }
+        return num;
+    }
 }
