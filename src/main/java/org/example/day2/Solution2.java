@@ -41,13 +41,16 @@ public class Solution2 {
                 String cubeQuantity = temp[1];
                 String cuberColour = temp[2];
 
-                switch(cuberColour){
-                    case "red": if(Integer.parseInt(cubeQuantity) > MAX_RED) return;
-                    break;
-                    case "green": if(Integer.parseInt(cubeQuantity) > MAX_GREEN) return;
-                    break;
-                    case "blue": if(Integer.parseInt(cubeQuantity) > MAX_BLUE) return;
-                    break;
+                switch (cuberColour) {
+                    case "red" -> {
+                        if (Integer.parseInt(cubeQuantity) > MAX_RED) return;
+                    }
+                    case "green" -> {
+                        if (Integer.parseInt(cubeQuantity) > MAX_GREEN) return;
+                    }
+                    case "blue" -> {
+                        if (Integer.parseInt(cubeQuantity) > MAX_BLUE) return;
+                    }
                 }
 
             }
