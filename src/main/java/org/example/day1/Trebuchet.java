@@ -1,4 +1,4 @@
-package org.example.problem1;
+package org.example.day1;
 
 import java.io.IOException;
 import java.nio.file.Files;
