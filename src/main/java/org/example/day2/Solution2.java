@@ -13,7 +13,7 @@ public class Solution2 {
     public static int result = 0;
 
     public static void main(String[] args) {
-        final String PATH = "C:\\Users\\55219\\Desktop\\dev\\adventofcode\\src\\main\\java\\org\\example\\day2\\test.txt";
+        final String PATH = "";
         String[] gameSets;
         List<String> games = Reader.reader(PATH);
         int resultOfCalculatePower = 0;
@@ -74,12 +74,9 @@ public class Solution2 {
                 String[] temp = cube.split(" ");
                 String numOfCubes = temp[1];
                 String cubeColour = temp[2];
-                if(!maxCubesPerColor.containsKey(cubeColour)){
-                    maxCubesPerColor.put(cubeColour, Integer.parseInt(numOfCubes));
-                } else if ((maxCubesPerColor.get(cubeColour) < Integer.parseInt(numOfCubes))) {
-                    maxCubesPerColor.put(cubeColour, Integer.parseInt(numOfCubes));
-                }
-
+                maxCubesPerColor.compute(cubeColour, (key, oldValue) ->
+                        Math.max(oldValue != null ? oldValue : 0, Integer.parseInt(numOfCubes))
+                );
             }
         }
         return maxCubesPerColor.get("red") * maxCubesPerColor.get("green") * maxCubesPerColor.get("blue");
