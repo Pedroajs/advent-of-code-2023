@@ -2,7 +2,9 @@ package org.example.day2;
 
 import org.example.Reader;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Solution2 {
     public static final int MAX_RED = 12;
@@ -11,9 +13,10 @@ public class Solution2 {
     public static int result = 0;
 
     public static void main(String[] args) {
-        final String PATH = "";
+        final String PATH = "C:\\Users\\55219\\Desktop\\dev\\adventofcode\\src\\main\\java\\org\\example\\day2\\test.txt";
         String[] gameSets;
         List<String> games = Reader.reader(PATH);
+        int resultOfCalculatePower = 0;
         assert games != null;
         for(String game : games){
             String[] tempSplit = game.split(":");
@@ -23,8 +26,11 @@ public class Solution2 {
             // 81 -> subString(5)
             int gameId = Integer.parseInt(tempSplit[0].substring(5));
             validate(gameSets, gameId);
+            resultOfCalculatePower += calculatePower(gameSets);
         }
-        System.out.println(result);
+        System.out.println("part 1 result: " + result);
+        System.out.println("part 2 result: " + resultOfCalculatePower);
+
     }
 
 
@@ -56,5 +62,26 @@ public class Solution2 {
             }
         }
         result += gameId;
+    }
+
+
+    public static int calculatePower(String[] gameSets){
+        Map<String, Integer> maxCubesPerColor = new HashMap<>();
+        for(String gameSet : gameSets){
+            String[] cubes = gameSet.split(",");
+
+            for(String cube : cubes){
+                String[] temp = cube.split(" ");
+                String numOfCubes = temp[1];
+                String cubeColour = temp[2];
+                if(!maxCubesPerColor.containsKey(cubeColour)){
+                    maxCubesPerColor.put(cubeColour, Integer.parseInt(numOfCubes));
+                } else if ((maxCubesPerColor.get(cubeColour) < Integer.parseInt(numOfCubes))) {
+                    maxCubesPerColor.put(cubeColour, Integer.parseInt(numOfCubes));
+                }
+
+            }
+        }
+        return maxCubesPerColor.get("red") * maxCubesPerColor.get("green") * maxCubesPerColor.get("blue");
     }
 }
